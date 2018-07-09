@@ -19,7 +19,7 @@ public class DimenGenerator {
 
         DimenTypes[] values = DimenTypes.values();
         for (DimenTypes value : values) {
-            MakeUtils.makeAll(DESIGN_WIDTH, value, "/androidui/adapter");
+            MakeUtils.makeAll(DESIGN_WIDTH, value, "dimen-values");//File.separator+"d"+File.separator
         }
 
     }

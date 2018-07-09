@@ -16,11 +16,12 @@ public class MakeUtils {
     private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
     private static final String XML_RESOURCE_START = "<resources>\r\n";
     private static final String XML_RESOURCE_END = "</resources>\r\n";
-    private static final String XML_DIMEN_TEMPLETE = "<dimen name=\"qb_%1$spx_%2$d\">%3$.2fdp</dimen>\r\n";
+    private static final String XML_DIMEN_TEMPLETE = "    <dimen name=\"x%1$d\">%2$.2fdp</dimen>\r\n";
+//    private static final String XML_DIMEN_TEMPLETE = "<dimen name=\"qb_%1$spx_%2$d\">%3$.2fdp</dimen>\r\n";
 
    
-    private static final String XML_BASE_DPI = "<dimen name=\"base_dpi\">%ddp</dimen>\r\n";
-    private  static final int MAX_SIZE = 720;
+    private static final String XML_BASE_DPI = "    <dimen name=\"base_dpi\">%ddp</dimen>\r\n";
+    private static final int MAX_SIZE = 720;
 
     /**
      * 生成的文件名
@@ -55,7 +56,9 @@ public class MakeUtils {
             for (int i = 0; i <= MAX_SIZE; i++) {
             	
                 dpValue = px2dip((float) i,type.getSwWidthDp(),designWidth);
-                temp = String.format(XML_DIMEN_TEMPLETE,"", i, dpValue);
+                //<dimen name="qb_%1$spx_%2$d">%3$.2fdp</dimen>
+                //<dimen name="qb_px_375">300.00dp</dimen>
+                temp = String.format(XML_DIMEN_TEMPLETE, i, dpValue);
                 sb.append(temp);
             }
 
@@ -83,23 +86,21 @@ public class MakeUtils {
             if (type.getSwWidthDp() > 0) {
                 //适配Android 3.2+
                 folderName = "values-sw" + type.getSwWidthDp() + "dp";
-            }else {
-            	return;
+            } else {
+                return;
             }
-            
+
             //生成目标目录
-            File file = new File(buildDir + File.separator + folderName);
+            File file = new File(buildDir + File.separator + folderName+ File.separator);
             if (!file.exists()) {
                 file.mkdirs();
             }
 
             //生成values文件
             FileOutputStream fos = new FileOutputStream(file.getAbsolutePath() + File.separator + XML_NAME);
-            fos.write(makeAllDimens(type,designWidth).getBytes());
+            fos.write(makeAllDimens(type, designWidth).getBytes());
             fos.flush();
             fos.close();
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
