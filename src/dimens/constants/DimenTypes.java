@@ -10,6 +10,7 @@ public enum DimenTypes {
      DP_sw__340(340),
      DP_sw__360(360),
      DP_sw__384(384),
+     DP_sw__392(392),
      DP_sw__400(400),
      DP_sw__411(411),
      DP_sw__432(432),
